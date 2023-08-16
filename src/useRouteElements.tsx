@@ -14,7 +14,7 @@ const useRouteElements = () => {
             path: "/login",
             element: (
                 <RegisterLayout>
-                    <Login />,
+                    <Login />
                 </RegisterLayout>
             ),
         },
@@ -22,7 +22,7 @@ const useRouteElements = () => {
             path: "/register",
             element: (
                 <RegisterLayout>
-                    <Register />,
+                    <Register />
                 </RegisterLayout>
             ),
         },
