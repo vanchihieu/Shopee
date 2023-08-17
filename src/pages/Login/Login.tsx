@@ -12,7 +12,7 @@ const Login = () => {
     });
     return (
         <div className="bg-orange">
-            <div className="px-4 mx-auto max-w-7xl">
+            <div className=" container">
                 <div className="grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-28 lg:pr-10">
                     <div className="lg:col-span-2 lg:col-start-4">
                         <form
