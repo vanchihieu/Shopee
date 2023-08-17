@@ -1,12 +1,56 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { login } from "src/apis/auth.api";
+import { Schema, schema } from "src/utils/rule";
+import { useMutation } from "react-query";
+import { isAxiosUnprocessableEntityError } from "src/utils/utils";
+import { ResponseApi } from "src/types/utils.type";
+import Input from "src/components/Input";
+
+type FormData = Pick<Schema, "email" | "password">;
+const loginSchema = schema.pick(["email", "password"]);
 
 const Login = () => {
     const {
+        register,
         handleSubmit,
-    } = useForm();
+        setError,
+        formState: { errors },
+    } = useForm<FormData>({
+        resolver: yupResolver(loginSchema),
+    });
+    const loginMutation = useMutation({
+        mutationFn: (body: Omit<FormData, "confirm_password">) => login(body),
+    });
     const onSubmit = handleSubmit((data) => {
-        console.log(data);
+        loginMutation.mutate(data, {
+            onSuccess: (data) => {
+                console.log(data);
+            },
+            onError: (error) => {
+                if (
+                    isAxiosUnprocessableEntityError<
+                        ResponseApi<Omit<FormData, "confirm_password">>
+                    >(error)
+                ) {
+                    const formError = error.response?.data.data;
+
+                    if (formError?.email) {
+                        setError("email", {
+                            message: formError.email,
+                            type: "Server",
+                        });
+                    }
+                    if (formError?.password) {
+                        setError("password", {
+                            message: formError.password,
+                            type: "Server",
+                        });
+                    }
+                }
+            },
+        });
     });
     return (
         <div className="bg-orange">
@@ -16,27 +60,26 @@ const Login = () => {
                         <form
                             className="p-10 bg-white rounded shadow-sm"
                             onSubmit={onSubmit}
+                            noValidate
                         >
                             <div className="text-2xl">Đăng Nhập</div>
-                            <div className="mt-8">
-                                <input
-                                    type="email"
-                                    name="email"
-                                    className="w-full p-3 border border-gray-300 rounded-sm outline-none focus:border-gray-500 focus:shadow-sm"
-                                    placeholder="Email"
-                                />
-                                <div className="mt-1 text-red-600 min-h-[1rem] text-sm"></div>
-                            </div>
-                            <div className="mt-3">
-                                <input
-                                    type="password"
-                                    name="password"
-                                    className="w-full p-3 border border-gray-300 rounded-sm outline-none focus:border-gray-500 focus:shadow-sm"
-                                    placeholder="Password"
-                                    autoCapitalize="on"
-                                />
-                                <div className="mt-1 text-red-600 min-h-[1rem] text-sm"></div>
-                            </div>
+                            <Input
+                                name="email"
+                                register={register}
+                                type="email"
+                                placeholder="Email"
+                                className="mt-8"
+                                errorMessage={errors.email?.message}
+                            />
+                            <Input
+                                name="password"
+                                register={register}
+                                type="password"
+                                placeholder="Password"
+                                className="mt-2"
+                                autoComplete="on"
+                                errorMessage={errors.password?.message}
+                            />
                             <div className="mt-3">
                                 <button
                                     type="submit"
