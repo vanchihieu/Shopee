@@ -1,4 +1,4 @@
-import type { RegisterOptions, UseFormRegister } from "react-hook-form";
+import type { UseFormRegister } from "react-hook-form";
 interface Props {
     type: React.HTMLInputTypeAttribute;
     errorMessage?: string;
