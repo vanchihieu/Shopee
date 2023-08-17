@@ -35,6 +35,7 @@ const Login = () => {
                                     name="password"
                                     className="w-full p-3 border border-gray-300 rounded-sm outline-none focus:border-gray-500 focus:shadow-sm"
                                     placeholder="Password"
+                                    autoCapitalize="on"
                                 />
                                 <div className="mt-1 text-red-600 min-h-[1rem] text-sm"></div>
                             </div>
