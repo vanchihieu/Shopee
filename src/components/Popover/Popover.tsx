@@ -11,6 +11,7 @@ import {
     useInteractions,
     arrow,
     FloatingArrow,
+    Placement,
 } from "@floating-ui/react";
 import { AnimatePresence } from "framer-motion";
 import React, { ElementType, useRef, useState } from "react";
@@ -22,6 +23,7 @@ interface Props {
     className?: string;
     as?: ElementType;
     initialOpen?: boolean
+    placement?:  Placement
 }
 
 export default function Popover({
@@ -29,18 +31,19 @@ export default function Popover({
     className,
     renderPopover,
     as: Element = "div",
-    initialOpen
+    initialOpen,
+    placement = 'bottom-end'
 }: Props) {
     const arrowRef = useRef(null);
     const [isOpen, setIsOpen] = useState(initialOpen || false);
     const { refs, floatingStyles, context } = useFloating({
         open: isOpen,
         onOpenChange: setIsOpen,
-        placement: "top",
+        placement: placement,
         // Make sure the tooltip stays on the screen
         whileElementsMounted: autoUpdate,
         middleware: [
-            offset(3),
+            offset(8),
             flip({
                 fallbackAxisSideDirection: "start",
             }),
