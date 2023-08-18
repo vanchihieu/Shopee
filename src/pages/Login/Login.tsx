@@ -1,17 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "src/apis/auth.api";
 import { Schema, schema } from "src/utils/rule";
 import { useMutation } from "react-query";
 import { isAxiosUnprocessableEntityError } from "src/utils/utils";
-import { ResponseApi } from "src/types/utils.type";
+import { ErrorResponse } from "src/types/utils.type";
 import Input from "src/components/Input";
+import { useContext } from "react";
+import { AppContext } from "src/contexts/app.context";
 
 type FormData = Pick<Schema, "email" | "password">;
 const loginSchema = schema.pick(["email", "password"]);
 
 const Login = () => {
+    const { setIsAuthenticated } = useContext(AppContext);
+    const navigate = useNavigate();
     const {
         register,
         handleSubmit,
@@ -25,13 +29,14 @@ const Login = () => {
     });
     const onSubmit = handleSubmit((data) => {
         loginMutation.mutate(data, {
-            onSuccess: (data) => {
-                console.log(data);
+            onSuccess: () => {
+                setIsAuthenticated(true);
+                navigate("/");
             },
             onError: (error) => {
                 if (
                     isAxiosUnprocessableEntityError<
-                        ResponseApi<Omit<FormData, "confirm_password">>
+                        ErrorResponse<Omit<FormData, "confirm_password">>
                     >(error)
                 ) {
                     const formError = error.response?.data.data;

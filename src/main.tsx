@@ -5,6 +5,7 @@ import App from "src/App";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { AppProvider } from "./contexts/app.context";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <BrowserRouter>
             <QueryClientProvider client={queryClient}>
-                <App />
+                <AppProvider>
+                    <App />
+                </AppProvider>
                 <ReactQueryDevtools initialIsOpen={false} />
             </QueryClientProvider>
         </BrowserRouter>
