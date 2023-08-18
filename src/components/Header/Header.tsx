@@ -4,13 +4,16 @@ import { useMutation } from "react-query";
 import { logout } from "src/apis/auth.api";
 import { useContext } from "react";
 import { AppContext } from "src/contexts/app.context";
+import path from "src/constants/path";
 
 export default function Header() {
-    const { setIsAuthenticated, isAuthenticated } = useContext(AppContext);
+    const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
+        useContext(AppContext);
 
     const logoutMutation = useMutation({
         mutationFn: logout,
         onSuccess: () => {
+            setProfile(null);
             setIsAuthenticated(false);
         },
     });
@@ -70,7 +73,7 @@ export default function Header() {
                             renderPopover={
                                 <div className="bg-white shadow-md border-gray-200">
                                     <Link
-                                        to="/profile"
+                                        to={path.profile}
                                         className="block py-3 px-4 hover:bg-slate-100  hover:text-cyan-500 w-full text-left"
                                     >
                                         Tài khoản của tôi
@@ -97,14 +100,14 @@ export default function Header() {
                                     className="w-full h-full object-cover rounded-full"
                                 />
                             </div>
-                            <div>Văn Chí Hiếu</div>
+                            <div>{profile?.email}</div>
                         </Popover>
                     )}
 
                     {!isAuthenticated && (
                         <div className="flex items-center">
                             <Link
-                                to="/register"
+                                to={path.register}
                                 className="mx-3 capitalize hover:text-white/70"
                             >
                                 Đăng ký

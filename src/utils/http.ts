@@ -3,9 +3,10 @@ import { toast } from "react-toastify";
 import HttpStatusCode from "src/constants/httpStatusCode.enum";
 import { AuthResponse } from "src/types/auth.type";
 import {
-    clearAccessTokenFromLS,
+    clearLS,
     getAccessTokenFromLS,
-    saveAccessTokenToLS,
+    setAccessTokenToLS,
+    setProfileToLS,
 } from "./auth";
 
 class Http {
@@ -39,13 +40,13 @@ class Http {
                 const { url } = response.config;
 
                 if (url === "login" || url === "register") {
-                    this.accessToken = (
-                        response.data as AuthResponse
-                    ).data.access_token;
-                    saveAccessTokenToLS(this.accessToken);
+                    const data = response.data as AuthResponse;
+                    this.accessToken = data.data.access_token;
+                    setAccessTokenToLS(this.accessToken);
+                    setProfileToLS(data.data.user);
                 } else if (url === "/logout") {
                     this.accessToken = "";
-                    clearAccessTokenFromLS();
+                    clearLS();
                 }
                 return response;
             },

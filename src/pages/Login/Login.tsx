@@ -15,7 +15,7 @@ type FormData = Pick<Schema, "email" | "password">;
 const loginSchema = schema.pick(["email", "password"]);
 
 const Login = () => {
-    const { setIsAuthenticated } = useContext(AppContext);
+    const { setIsAuthenticated, setProfile } = useContext(AppContext);
     const navigate = useNavigate();
     const {
         register,
@@ -25,13 +25,15 @@ const Login = () => {
     } = useForm<FormData>({
         resolver: yupResolver(loginSchema),
     });
-    const loginMutation = useMutation({
+    const 
+    loginMutation = useMutation({
         mutationFn: (body: Omit<FormData, "confirm_password">) => login(body),
     });
     const onSubmit = handleSubmit((data) => {
         loginMutation.mutate(data, {
-            onSuccess: () => {
+            onSuccess: (data) => {
                 setIsAuthenticated(true);
+                setProfile(data.data.data.user)
                 navigate("/");
             },
             onError: (error) => {
