@@ -11,6 +11,7 @@ import { isAxiosUnprocessableEntityError } from "src/utils/utils";
 import { ErrorResponse } from "src/types/utils.type";
 import { useContext } from "react";
 import { AppContext } from "src/contexts/app.context";
+import Button from "src/components/Button";
 type FormData = Schema;
 
 const Register = () => {
@@ -42,35 +43,35 @@ const Register = () => {
                     >(error)
                 ) {
                     const formError = error.response?.data.data;
-                    // if (formError) {
-                    //     Object.keys(formError).forEach((key) => {
-                    //         setError(
-                    //             key as keyof Omit<FormData, "confirm_password">,
-                    //             {
-                    //                 message:
-                    //                     formError[
-                    //                         key as keyof Omit<
-                    //                             FormData,
-                    //                             "confirm_password"
-                    //                         >
-                    //                     ],
-                    //                 type: "Server",
-                    //             }
-                    //         );
+                    if (formError) {
+                        Object.keys(formError).forEach((key) => {
+                            setError(
+                                key as keyof Omit<FormData, "confirm_password">,
+                                {
+                                    message:
+                                        formError[
+                                            key as keyof Omit<
+                                                FormData,
+                                                "confirm_password"
+                                            >
+                                        ],
+                                    type: "Server",
+                                }
+                            );
+                        });
+                    }
+                    // if (formError?.email) {
+                    //     setError("email", {
+                    //         message: formError.email,
+                    //         type: "Server",
                     //     });
                     // }
-                    if (formError?.email) {
-                        setError("email", {
-                            message: formError.email,
-                            type: "Server",
-                        });
-                    }
-                    if (formError?.password) {
-                        setError("password", {
-                            message: formError.password,
-                            type: "Server",
-                        });
-                    }
+                    // if (formError?.password) {
+                    //     setError("password", {
+                    //         message: formError.password,
+                    //         type: "Server",
+                    //     });
+                    // }
                 }
             },
         });
@@ -115,9 +116,15 @@ const Register = () => {
                             />
 
                             <div className="mt-2">
-                                <button className="w-full px-2 py-4 text-sm text-center text-white uppercase bg-red-500 hover:bg-red-600">
+                                <Button
+                                    className="w-full px-2 py-4 text-sm text-center text-white uppercase bg-red-500 hover:bg-red-600 flex justify-center items-center"
+                                    disabled={registerAccountMutation.isLoading}
+                                    isLoading={
+                                        registerAccountMutation.isLoading
+                                    }
+                                >
                                     Đăng ký
-                                </button>
+                                </Button>
                             </div>
                             <div className="flex justify-center mt-8 ">
                                 <span className="text-gray-400">

@@ -9,6 +9,7 @@ import { ErrorResponse } from "src/types/utils.type";
 import Input from "src/components/Input";
 import { useContext } from "react";
 import { AppContext } from "src/contexts/app.context";
+import Button from "src/components/Button";
 
 type FormData = Pick<Schema, "email" | "password">;
 const loginSchema = schema.pick(["email", "password"]);
@@ -86,12 +87,14 @@ const Login = () => {
                                 errorMessage={errors.password?.message}
                             />
                             <div className="mt-3">
-                                <button
+                                <Button
                                     type="submit"
-                                    className="w-full px-2 py-4 text-sm text-center text-white uppercase bg-red-500 hover:bg-red-600"
+                                    className="w-full px-2 py-4 text-sm text-center text-white uppercase bg-red-500 hover:bg-red-600 flex justify-center items-center"
+                                    isLoading={loginMutation.isLoading}
+                                    disabled={loginMutation.isLoading}
                                 >
                                     Đăng nhập
-                                </button>
+                                </Button>
                             </div>
                             <div className="flex justify-center mt-8 ">
                                 <span className="text-gray-400">
