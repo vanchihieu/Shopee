@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "src/apis/auth.api";
+import authApi from "src/apis/auth.api";
 import { Schema, schema } from "src/utils/rule";
 import { useMutation } from "react-query";
 import { isAxiosUnprocessableEntityError } from "src/utils/utils";
@@ -26,7 +26,8 @@ const Login = () => {
         resolver: yupResolver(loginSchema),
     });
     const loginMutation = useMutation({
-        mutationFn: (body: Omit<FormData, "confirm_password">) => login(body),
+        mutationFn: (body: Omit<FormData, "confirm_password">) =>
+            authApi.login(body),
     });
     const onSubmit = handleSubmit((data) => {
         loginMutation.mutate(data, {

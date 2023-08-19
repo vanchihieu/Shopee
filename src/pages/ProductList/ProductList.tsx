@@ -1,9 +1,19 @@
-import React from "react";
 import AsideFilter from "./AsideFilter";
 import SortProductList from "./SortProductList";
 import Product from "./Product";
+import { useQuery } from "react-query";
+import useQueryParams from "src/hooks/useQueryParams";
+import productApi from "src/apis/product.api";
 
 const ProductList = () => {
+    const queryParams = useQueryParams();
+    const { data } = useQuery({
+        queryKey: ["products", queryParams],
+        queryFn: () => {
+            return productApi.getProducts(queryParams);
+        },
+    });
+
     return (
         <div className="bg-gray-200 py-6 ">
             <div className="container">
