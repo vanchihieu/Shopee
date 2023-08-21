@@ -162,7 +162,7 @@ export default function Header() {
                     <div className="col-span-1 ">
                         <Popover
                             renderPopover={
-                                <div className="max-w-[400px] text-sm">
+                                <div className="max-w-[400px] text-sm ">
                                     <div className="p-2">
                                         <div className="text-gray-400 capitalize">
                                             Sản phẩm mới thêm
