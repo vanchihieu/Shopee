@@ -1,7 +1,7 @@
 import { Link, createSearchParams, useNavigate } from "react-router-dom";
 import Button from "src/components/Button";
 import path from "src/constants/path";
-import { QueryConfig } from "../ProductList";
+import { QueryConfig } from "../../ProductList";
 import { Category } from "src/types/category.type";
 import classNames from "classnames";
 import InputNumber from "src/components/InputNumber";
@@ -9,8 +9,9 @@ import { useForm, Controller } from "react-hook-form";
 import { Schema, schema } from "src/utils/rule";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NoUndefinedField } from "src/types/utils.type";
-import RatingStars from "src/components/RatingStars";
+
 import { omit } from "lodash";
+import RatingStars from "../RatingStars";
 interface Props {
     queryConfig: QueryConfig;
     categories: Category[];
@@ -203,7 +204,10 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
 
             <div className="bg-gray-300 h-[1px] my-4" />
 
-            <Button className="w-full py-2 uppercase bg-orange text-white text-sm hover:bg-orange/80 flex justify-center items-center" onClick={handleRemoveAll}>
+            <Button
+                className="w-full py-2 uppercase bg-orange text-white text-sm hover:bg-orange/80 flex justify-center items-center"
+                onClick={handleRemoveAll}
+            >
                 Xóa tất cả
             </Button>
         </div>

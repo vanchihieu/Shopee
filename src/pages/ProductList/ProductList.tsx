@@ -1,6 +1,4 @@
-import AsideFilter from "./AsideFilter";
-import SortProductList from "./SortProductList";
-import Product from "./Product";
+import AsideFilter from "./components/AsideFilter";
 import { omitBy, isUndefined } from "lodash";
 import { useQuery } from "react-query";
 import useQueryParams from "src/hooks/useQueryParams";
@@ -8,6 +6,8 @@ import productApi from "src/apis/product.api";
 import Pagination from "src/components/Pagination";
 import { ProductListConfig } from "src/types/product.type";
 import categoryApi from "src/apis/category.api";
+import SortProductList from "./components/SortProductList";
+import Product from "./components/Product";
 
 export type QueryConfig = {
     [key in keyof ProductListConfig]: string;
@@ -26,7 +26,7 @@ const ProductList = () => {
             price_max: queryParams.price_max,
             price_min: queryParams.price_min,
             rating_filter: queryParams.rating_filter,
-            category: queryParams.category
+            category: queryParams.category,
         },
         isUndefined
     );
