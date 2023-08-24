@@ -41,7 +41,6 @@ export default function Header() {
     });
 
     const purchasesInCart = purchasesInCartData?.data.data;
-    console.log("🚀 ~ Header ~ purchasesInCart:", purchasesInCart);
 
     const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
         useContext(AppContext);

@@ -138,6 +138,7 @@ export default function ProductDetail() {
                                 onMouseMove={handleZoom}
                                 onMouseLeave={handleRemoveZoom}
                             >
+                                {/* pointer-events-none: de ngan chan su kien bubble khi hover vao img */}
                                 <img
                                     className="absolute top-0 left-0 h-full w-full bg-white object-cover pointer-events-none"
                                     src={activeImage}

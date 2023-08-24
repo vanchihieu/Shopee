@@ -5,7 +5,6 @@ export type PurchaseStatus = -1 | 1 | 2 | 3 | 4 | 5;
 export type PurchaseListStatus = PurchaseStatus | 0;
 
 export interface Purchase {
-    [x: string]: any;
     _id: string;
     buy_count: number;
     price: number;
