@@ -14,6 +14,7 @@ import { purchasesStatus } from "src/constants/purchase";
 import purchaseApi from "src/apis/purchase.api";
 import noproduct from "src/assets/images/no-product.png";
 import { formatCurrency } from "src/utils/utils";
+import { queryClient } from "src/main";
 type FormData = Pick<Schema, "name">;
 
 const nameSchema = schema.pick(["name"]);
@@ -21,7 +22,8 @@ const MAX_PURCHASES = 5;
 
 export default function Header() {
     const queryConfig = useQueryConfig();
-
+    const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
+        useContext(AppContext);
     const navigate = useNavigate();
     const { handleSubmit, register } = useForm<FormData>({
         defaultValues: {
@@ -38,18 +40,19 @@ export default function Header() {
         queryKey: ["purchases", { status: purchasesStatus.inCart }],
         queryFn: () =>
             purchaseApi.getPurchases({ status: purchasesStatus.inCart }),
+        enabled: isAuthenticated,
     });
 
     const purchasesInCart = purchasesInCartData?.data.data;
-
-    const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
-        useContext(AppContext);
 
     const logoutMutation = useMutation({
         mutationFn: authApi.logout,
         onSuccess: () => {
             setProfile(null);
             setIsAuthenticated(false);
+            queryClient.removeQueries({
+                queryKey: ["purchases", { status: purchasesStatus.inCart }],
+            });
         },
     });
     const handleLogout = () => {
@@ -125,7 +128,7 @@ export default function Header() {
                     </Popover>
                     {isAuthenticated && (
                         <Popover
-                            className="flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6"
+                            className="flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6 z-50"
                             renderPopover={
                                 <div className="bg-white shadow-md border-gray-200">
                                     <Link
@@ -215,7 +218,7 @@ export default function Header() {
                             </button>
                         </div>
                     </form>
-                    <div className="col-span-1 z-50">
+                    <div className="col-span-1 z-40">
                         <Popover
                             renderPopover={
                                 <div className="max-w-[400px] text-sm">
@@ -280,16 +283,17 @@ export default function Header() {
                                                         : ""}{" "}
                                                     Thêm hàng vào giỏ
                                                 </div>
-                                                <button className="capitalize bg-orange hover:bg-opacity-90 px-4 py-2 rounded-sm text-white">
+                                                <Link to={path.cart} className="capitalize bg-orange hover:bg-opacity-90 px-4 py-2 rounded-sm text-white">
                                                     Xem giỏ hàng
-                                                </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className="p-2">
+                                        <div className="p-2 flex flex-col items-center justify-center h-[250px] w-[250px] rounded-xl">
                                             <img
                                                 src={noproduct}
                                                 alt="no product"
+                                                className="w-28 h-28"
                                             />
                                             <div className="mt-3 capitalize">
                                                 Chưa có sản phẩm
