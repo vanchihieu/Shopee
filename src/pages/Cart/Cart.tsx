@@ -188,47 +188,29 @@ export default function Cart() {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="my-3 rounded-sm bg-white p-5 shadow">
-                            {extendedPurchases?.map((purchase, index) => (
-                                <div
-                                    key={purchase._id}
-                                    className="first:mt-0 mt-5 grid grid-cols-12 text-center rounded-sm border border-gray-200 py-5 px-4 text-sm text-gray-500 items-center"
-                                >
-                                    <div className="col-span-6">
-                                        <div className="flex">
-                                            <div className="flex flex-shrink-0 items-center justify-center pr-3">
-                                                <input
-                                                    type="checkbox"
-                                                    className="h-5 w-5 accent-orange"
-                                                    checked={purchase.checked}
-                                                    onChange={handleCheck(
-                                                        index
-                                                    )}
-                                                />
-                                            </div>
-                                            <div className="flex-grow">
-                                                <div className="flex">
-                                                    <Link
-                                                        to={`${
-                                                            path.home
-                                                        }${generateNameId({
-                                                            name: purchase
-                                                                .product.name,
-                                                            id: purchase.product
-                                                                ._id,
-                                                        })}`}
-                                                        className="h-20 w-20 flex-shrink-0"
-                                                    >
-                                                        <img
-                                                            src={
-                                                                purchase.product
-                                                                    .image
-                                                            }
-                                                            alt="purchase"
-                                                        />
-                                                    </Link>
-                                                    <div className="flex-grow px-2 pt-1 pb-2">
+                        {extendedPurchases.length > 0 && (
+                            <div className="my-3 rounded-sm bg-white p-5 shadow">
+                                {extendedPurchases?.map((purchase, index) => (
+                                    <div
+                                        key={purchase._id}
+                                        className="first:mt-0 mt-5 grid grid-cols-12 text-center rounded-sm border border-gray-200 py-5 px-4 text-sm text-gray-500 items-center"
+                                    >
+                                        <div className="col-span-6">
+                                            <div className="flex">
+                                                <div className="flex flex-shrink-0 items-center justify-center pr-3">
+                                                    <input
+                                                        type="checkbox"
+                                                        className="h-5 w-5 accent-orange"
+                                                        checked={
+                                                            purchase.checked
+                                                        }
+                                                        onChange={handleCheck(
+                                                            index
+                                                        )}
+                                                    />
+                                                </div>
+                                                <div className="flex-grow">
+                                                    <div className="flex">
                                                         <Link
                                                             to={`${
                                                                 path.home
@@ -240,112 +222,145 @@ export default function Cart() {
                                                                     .product
                                                                     ._id,
                                                             })}`}
-                                                            className="line-clamp-2"
+                                                            className="h-20 w-20 flex-shrink-0"
                                                         >
-                                                            {
-                                                                purchase.product
-                                                                    .name
-                                                            }
+                                                            <img
+                                                                src={
+                                                                    purchase
+                                                                        .product
+                                                                        .image
+                                                                }
+                                                                alt="purchase"
+                                                            />
                                                         </Link>
+                                                        <div className="flex-grow px-2 pt-1 pb-2">
+                                                            <Link
+                                                                to={`${
+                                                                    path.home
+                                                                }${generateNameId(
+                                                                    {
+                                                                        name: purchase
+                                                                            .product
+                                                                            .name,
+                                                                        id: purchase
+                                                                            .product
+                                                                            ._id,
+                                                                    }
+                                                                )}`}
+                                                                className="line-clamp-2"
+                                                            >
+                                                                {
+                                                                    purchase
+                                                                        .product
+                                                                        .name
+                                                                }
+                                                            </Link>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div className="col-span-6">
-                                        <div className="grid grid-cols-5 items-center">
-                                            <div className="col-span-2">
-                                                <div className="flex items-center justify-center">
-                                                    <span className="text-gray-300 line-through">
-                                                        ₫
-                                                        {formatCurrency(
-                                                            purchase.product
-                                                                .price_before_discount
-                                                        )}
-                                                    </span>
-                                                    <span className="ml-3">
-                                                        ₫
-                                                        {formatCurrency(
-                                                            purchase.product
-                                                                .price
-                                                        )}
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <div className="col-span-1">
-                                                <QuantityController
-                                                    max={
-                                                        purchase.product
-                                                            .quantity
-                                                    }
-                                                    value={purchase.buy_count}
-                                                    classNameWrapper="flex items-center"
-                                                    onIncrease={(value) =>
-                                                        handleQuantity(
-                                                            index,
-                                                            value,
-                                                            value <=
+                                        <div className="col-span-6">
+                                            <div className="grid grid-cols-5 items-center">
+                                                <div className="col-span-2">
+                                                    <div className="flex items-center justify-center">
+                                                        <span className="text-gray-300 line-through">
+                                                            ₫
+                                                            {formatCurrency(
                                                                 purchase.product
-                                                                    .quantity
-                                                        )
-                                                    }
-                                                    onDecrease={(value) =>
-                                                        handleQuantity(
-                                                            index,
-                                                            value,
-                                                            value >= 1
-                                                        )
-                                                    }
-                                                    onType={handleTypeQuantity(
-                                                        index
-                                                    )}
-                                                    onFocusOut={(value) =>
-                                                        handleQuantity(
-                                                            index,
-                                                            value,
-                                                            value >= 1 &&
+                                                                    .price_before_discount
+                                                            )}
+                                                        </span>
+                                                        <span className="ml-3">
+                                                            ₫
+                                                            {formatCurrency(
+                                                                purchase.product
+                                                                    .price
+                                                            )}
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="col-span-1">
+                                                    <QuantityController
+                                                        max={
+                                                            purchase.product
+                                                                .quantity
+                                                        }
+                                                        value={
+                                                            purchase.buy_count
+                                                        }
+                                                        classNameWrapper="flex items-center"
+                                                        onIncrease={(value) =>
+                                                            handleQuantity(
+                                                                index,
+                                                                value,
                                                                 value <=
                                                                     purchase
                                                                         .product
-                                                                        .quantity &&
-                                                                value !==
-                                                                    (
-                                                                        purchasesInCart as unknown as Purchase[]
-                                                                    )[index]
-                                                                        .buy_count
-                                                        )
-                                                    }
-                                                    disabled={purchase.disabled}
-                                                />
-                                            </div>
+                                                                        .quantity
+                                                            )
+                                                        }
+                                                        onDecrease={(value) =>
+                                                            handleQuantity(
+                                                                index,
+                                                                value,
+                                                                value >= 1
+                                                            )
+                                                        }
+                                                        onType={handleTypeQuantity(
+                                                            index
+                                                        )}
+                                                        onFocusOut={(value) =>
+                                                            handleQuantity(
+                                                                index,
+                                                                value,
+                                                                value >= 1 &&
+                                                                    value <=
+                                                                        purchase
+                                                                            .product
+                                                                            .quantity &&
+                                                                    value !==
+                                                                        (
+                                                                            purchasesInCart as unknown as Purchase[]
+                                                                        )[index]
+                                                                            .buy_count
+                                                            )
+                                                        }
+                                                        disabled={
+                                                            purchase.disabled
+                                                        }
+                                                    />
+                                                </div>
 
-                                            <div className="col-span-1">
-                                                <span className="text-orange">
-                                                    ₫
-                                                    {formatCurrency(
-                                                        purchase.product.price *
-                                                            purchase.buy_count
-                                                    )}
-                                                </span>
-                                            </div>
+                                                <div className="col-span-1">
+                                                    <span className="text-orange">
+                                                        ₫
+                                                        {formatCurrency(
+                                                            purchase.product
+                                                                .price *
+                                                                purchase.buy_count
+                                                        )}
+                                                    </span>
+                                                </div>
 
-                                            <div className="col-span-1">
-                                                <button
-                                                    className="bg-orange/95 px-4 py-3 text-white transition-colors hover:text-black hover:bg-orange/90 rounded-md"
-                                                    onClick={handleDelete(
-                                                        index
-                                                    )}
-                                                >
-                                                    Xóa
-                                                </button>
+                                                <div className="col-span-1">
+                                                    <button
+                                                        className="bg-orange/95 px-4 py-3 text-white transition-colors hover:text-black hover:bg-orange/90 rounded-md"
+                                                        onClick={handleDelete(
+                                                            index
+                                                        )}
+                                                    >
+                                                        Xóa
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 
