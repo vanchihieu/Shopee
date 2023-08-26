@@ -1,3 +1,5 @@
+import { produce } from "immer";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import purchaseApi from "src/apis/purchase.api";
@@ -5,17 +7,56 @@ import Button from "src/components/Button";
 import QuantityController from "src/components/QuantityController";
 import path from "src/constants/path";
 import { purchasesStatus } from "src/constants/purchase";
+import { Purchase } from "src/types/purchase.type";
 import { formatCurrency, generateNameId } from "src/utils/utils";
 
+interface ExtendedPurchase extends Purchase {
+    disabled: boolean;
+    checked: boolean;
+}
+
 export default function Cart() {
+    const [extendedPurchases, setExtendedPurchases] = useState<
+        ExtendedPurchase[]
+    >([]);
     const { data: purchasesInCartData } = useQuery({
         queryKey: ["purchases", { status: purchasesStatus.inCart }],
         queryFn: () =>
             purchaseApi.getPurchases({ status: purchasesStatus.inCart }),
     });
+    const isAllChecked = useMemo(
+        () => extendedPurchases.every((purchase) => purchase.checked),
+        [extendedPurchases]
+    );
     const purchasesInCart = purchasesInCartData?.data.data;
-    console.log("🚀 ~ Cart ~ purchasesInCart:", purchasesInCart);
+    useEffect(() => {
+        setExtendedPurchases(
+            purchasesInCart?.map((purchase) => ({
+                ...purchase,
+                disabled: false,
+                checked: false,
+            })) || []
+        );
+    }, [purchasesInCart]);
 
+    const handleCheck =
+        (purchaseIndex: number) =>
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setExtendedPurchases(
+                produce((draft) => {
+                    draft[purchaseIndex].checked = event.target.checked;
+                })
+            );
+        };
+
+    const handleCheckAll = () => {
+        setExtendedPurchases((prev) =>
+            prev.map((purchase) => ({
+                ...purchase,
+                checked: !isAllChecked,
+            }))
+        );
+    };
     return (
         <div className="bg-neutral-100 py-16">
             <div className="container">
@@ -28,6 +69,8 @@ export default function Cart() {
                                         <input
                                             type="checkbox"
                                             className="h-5 w-5 accent-orange"
+                                            checked={isAllChecked}
+                                            onChange={handleCheckAll}
                                         />
                                     </div>
                                     <div className="flex-grow text-black">
@@ -46,7 +89,7 @@ export default function Cart() {
                         </div>
 
                         <div className="my-3 rounded-sm bg-white p-5 shadow">
-                            {purchasesInCart?.map((purchase, index) => (
+                            {extendedPurchases?.map((purchase, index) => (
                                 <div
                                     key={purchase._id}
                                     className="first:mt-0 mt-5 grid grid-cols-12 text-center rounded-sm border border-gray-200 py-5 px-4 text-sm text-gray-500"
@@ -57,6 +100,10 @@ export default function Cart() {
                                                 <input
                                                     type="checkbox"
                                                     className="h-5 w-5 accent-orange"
+                                                    checked={purchase.checked}
+                                                    onChange={handleCheck(
+                                                        index
+                                                    )}
                                                 />
                                             </div>
                                             <div className="flex-grow">
@@ -166,10 +213,14 @@ export default function Cart() {
                             <input
                                 type="checkbox"
                                 className="h-5 w-5 accent-orange"
+                                checked={isAllChecked}
                             />
                         </div>
-                        <button className="mx-3 border-none bg-none">
-                            Chọn tất cả
+                        <button
+                            className="mx-3 border-none bg-none"
+                            onClick={handleCheckAll}
+                        >
+                            Chọn tất cả ({extendedPurchases.length})
                         </button>
                         <button className="mx-3 border-none bg-none">
                             Xóa
