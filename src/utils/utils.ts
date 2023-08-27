@@ -44,3 +44,6 @@ export const getIdFromNameId = (nameId: string) => {
     const arr = nameId.split("-i-");
     return arr[arr.length - 1];
 };
+
+export const getAvatarUrl = (avatarName?: string) =>
+    avatarName ? `${config.baseUrl}images/${avatarName}` : userImage;

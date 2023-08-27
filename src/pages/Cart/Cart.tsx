@@ -222,7 +222,7 @@ export default function Cart() {
                                                                     .product
                                                                     ._id,
                                                             })}`}
-                                                            className="h-20 w-20 flex-shrink-0"
+                                                            className="h-20 w-20 flex-shrink-0 "
                                                         >
                                                             <img
                                                                 src={
@@ -247,7 +247,7 @@ export default function Cart() {
                                                                             ._id,
                                                                     }
                                                                 )}`}
-                                                                className="line-clamp-2"
+                                                                className="line-clamp-2 text-left"
                                                             >
                                                                 {
                                                                     purchase
