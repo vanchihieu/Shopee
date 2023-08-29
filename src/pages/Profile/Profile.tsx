@@ -1,4 +1,4 @@
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import userApi from "src/apis/user.api";
 import { useForm, Controller } from "react-hook-form";
 import Button from "src/components/Button";
@@ -7,6 +7,7 @@ import { UserSchema, userSchema } from "src/utils/rule";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputNumber from "src/components/InputNumber";
 import { useEffect } from "react";
+import DataSelect from "../User/components/DateSelect";
 
 type FormData = Pick<
     UserSchema,
@@ -44,8 +45,6 @@ export default function Profile() {
         queryFn: userApi.getProfile,
     });
     const profile = profileData?.data.data;
-    console.log("🚀 ~ Profile ~ profile:", profile);
-
 
     useEffect(() => {
         if (profile) {
@@ -62,6 +61,13 @@ export default function Profile() {
         }
     }, [profile, setValue]);
 
+    const updateProfileMutation = useMutation(userApi.updateProfile);
+
+    const onSubmit = handleSubmit(async (data) => {
+        console.log("🚀 ~ onSubmit ~ data:", data);
+
+        await updateProfileMutation.mutateAsync({});
+    });
     return (
         <div className="rounded-sm bg-white px-2 pb-10 md:px-7 md:pb-20 shadow ">
             <div className="border-b border-b-gray-200 py-6">
@@ -73,7 +79,10 @@ export default function Profile() {
                 </div>
             </div>
 
-            <form className="mt-8 flex flex-col-reverse md:flex-row md:items-start">
+            <form
+                className="mt-8 flex flex-col-reverse md:flex-row md:items-start"
+                onSubmit={onSubmit}
+            >
                 <div className="mt-6 flex-grow pr-12 md:mt-0 md:pr-12">
                     <div className="flex flex-wrap flex-col sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">
@@ -137,24 +146,17 @@ export default function Profile() {
                         </div>
                     </div>
 
-                    <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
-                        <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">
-                            Ngày sinh
-                        </div>
-                        <div className="sm:w-[80%] sm:pl-5">
-                            <div className="flex justify-between">
-                                <select className="h-10 w-[32%] rounded-sm border border-black/10 px-3">
-                                    <option disabled>Ngày</option>
-                                </select>
-                                <select className="h-10 w-[32%] rounded-sm border border-black/10 px-3">
-                                    <option disabled>Tháng</option>
-                                </select>
-                                <select className="h-10 w-[32%] rounded-sm border border-black/10 px-3">
-                                    <option disabled>Năm</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                    <Controller
+                        control={control}
+                        name="date_of_birth"
+                        render={({ field }) => (
+                            <DataSelect
+                                errorMessage={errors.date_of_birth?.message}
+                                onChange={field.onChange}
+                                value={field.value}
+                            />
+                        )}
+                    />
 
                     <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize"></div>
