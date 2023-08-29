@@ -13,6 +13,7 @@ import Cart from "./pages/Cart";
 import CartLayout from "./layouts/CartLayout";
 import UserLayout from "./pages/User/layouts/UserLayout";
 import ChangePassword from "./pages/User/pages/ChangePassword";
+import HIstoryPurchase from "./pages/User/pages/HistoryPurchase";
 
 // eslint-disable-next-line react-refresh/only-export-components
 function ProtectedRoute() {
@@ -72,6 +73,10 @@ const useRouteElements = () => {
                         {
                             path: path.changePassword,
                             element: <ChangePassword />,
+                        },
+                        {
+                            path: path.historyPurchase,
+                            element: <HIstoryPurchase />,
                         },
                     ],
                 },
