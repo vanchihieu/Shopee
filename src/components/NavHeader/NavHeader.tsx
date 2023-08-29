@@ -91,7 +91,7 @@ export default function NavHeader() {
             </Popover>
             {isAuthenticated && (
                 <Popover
-                    className="ml-6 flex cursor-pointer items-center py-1 hover:text-white/70"
+                    className="ml-6 flex cursor-pointer items-center py-1 hover:text-white/70 z-50"
                     renderPopover={
                         <div className="relative rounded-sm border border-gray-200 bg-white shadow-md">
                             <Link
