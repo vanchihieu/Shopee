@@ -6,8 +6,11 @@ import Input from "src/components/Input";
 import { UserSchema, userSchema } from "src/utils/rule";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputNumber from "src/components/InputNumber";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import DataSelect from "../User/components/DateSelect";
+import { setProfileToLS } from "src/utils/auth";
+import { toast } from "react-toastify";
+import { AppContext } from "src/contexts/app.context";
 
 type FormData = Pick<
     UserSchema,
@@ -23,6 +26,7 @@ const profileSchema = userSchema.pick([
 ]);
 
 export default function Profile() {
+    const {setProfile} = useContext(AppContext)
     const {
         register,
         control,
@@ -40,7 +44,7 @@ export default function Profile() {
         resolver: yupResolver(profileSchema),
     });
 
-    const { data: profileData } = useQuery({
+    const { data: profileData, refetch } = useQuery({
         queryKey: ["profile"],
         queryFn: userApi.getProfile,
     });
@@ -64,10 +68,16 @@ export default function Profile() {
     const updateProfileMutation = useMutation(userApi.updateProfile);
 
     const onSubmit = handleSubmit(async (data) => {
-        console.log("🚀 ~ onSubmit ~ data:", data);
-
-        await updateProfileMutation.mutateAsync({});
+        const res = await updateProfileMutation.mutateAsync({
+            ...data,
+            date_of_birth: data.date_of_birth?.toISOString(),
+        });
+        setProfile(res.data.data)
+        setProfileToLS(res.data.data)
+        refetch();
+        toast.success(res.data.message);
     });
+
     return (
         <div className="rounded-sm bg-white px-2 pb-10 md:px-7 md:pb-20 shadow ">
             <div className="border-b border-b-gray-200 py-6">
@@ -162,7 +172,7 @@ export default function Profile() {
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize"></div>
                         <div className="sm:w-[80%] sm:pl-5">
                             <Button
-                                className="flex items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80"
+                                className="flex items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80 rounded-sm"
                                 type="submit"
                             >
                                 Lưu

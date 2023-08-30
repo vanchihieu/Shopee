@@ -1,7 +1,10 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import path from "src/constants/path";
-
+import { AppContext } from "src/contexts/app.context";
+import userImage from "src/assets/images/user.svg";
 export default function UserSideNav() {
+    const {profile} = useContext(AppContext)
     return (
         <div>
             <div className="flex items-center border-b border-b-gray-200 py-4">
@@ -17,7 +20,7 @@ export default function UserSideNav() {
                 </Link>
                 <div className="flex-grow pl-4">
                     <div className="mb-1 truncate font-semibold text-gray-600">
-                        cdthanh
+                        {profile?.name}
                     </div>
                     <Link
                         to={path.profile}
@@ -48,7 +51,7 @@ export default function UserSideNav() {
                 >
                     <div className="mr-3 h-[22px] w-[22px]">
                         <img
-                            src="https://cf.shopee.vn/file/ba61750a46794d8847c3f463c5e71cc4"
+                            src={profile?.avatar || userImage}
                             alt=""
                             className="h-full w-full"
                         />

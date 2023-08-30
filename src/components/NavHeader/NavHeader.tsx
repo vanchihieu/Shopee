@@ -7,6 +7,7 @@ import { purchasesStatus } from "src/constants/purchase";
 import { AppContext } from "src/contexts/app.context";
 import { getAvatarUrl } from "src/utils/utils";
 import Popover from "../Popover";
+
 // import { useTranslation } from "react-i18next";
 // import { locales } from "src/i18n/i18n";
 
@@ -16,6 +17,7 @@ export default function NavHeader() {
 
     const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
         useContext(AppContext);
+    console.log("🚀 ~ NavHeader ~ profile:", profile);
     const queryClient = useQueryClient();
     const logoutMutation = useMutation({
         mutationFn: authApi.logout,
