@@ -17,7 +17,6 @@ export default function NavHeader() {
 
     const { setIsAuthenticated, isAuthenticated, setProfile, profile } =
         useContext(AppContext);
-    console.log("🚀 ~ NavHeader ~ profile:", profile);
     const queryClient = useQueryClient();
     const logoutMutation = useMutation({
         mutationFn: authApi.logout,

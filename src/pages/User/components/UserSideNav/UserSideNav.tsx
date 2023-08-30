@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import path from "src/constants/path";
 import { AppContext } from "src/contexts/app.context";
 import userImage from "src/assets/images/user.svg";
+import { getAvatarUrl } from "src/utils/utils";
 export default function UserSideNav() {
-    const {profile} = useContext(AppContext)
+    const { profile } = useContext(AppContext);
     return (
         <div>
             <div className="flex items-center border-b border-b-gray-200 py-4">
@@ -13,7 +14,7 @@ export default function UserSideNav() {
                     className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-full border border-black/10"
                 >
                     <img
-                        src=""
+                        src={getAvatarUrl(profile?.avatar)}
                         alt="image"
                         className="h-full w-full object-cover"
                     />
@@ -51,7 +52,7 @@ export default function UserSideNav() {
                 >
                     <div className="mr-3 h-[22px] w-[22px]">
                         <img
-                            src={profile?.avatar || userImage}
+                            src={userImage}
                             alt=""
                             className="h-full w-full"
                         />
