@@ -14,6 +14,7 @@ import { AppContext } from "src/contexts/app.context";
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from "src/utils/utils";
 import { type } from "os";
 import { ErrorResponse } from "src/types/utils.type";
+import config from "src/constants/config";
 
 type FormData = Pick<
     UserSchema,
@@ -56,7 +57,7 @@ export default function Profile() {
         handleSubmit,
         setValue,
         watch,
-        setError
+        setError,
     } = useForm<FormData>({
         defaultValues: {
             name: "",
@@ -139,7 +140,17 @@ export default function Profile() {
 
     const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileFromLocal = event.target.files?.[0];
-        setFile(fileFromLocal);
+        if (
+            fileFromLocal &&
+            (fileFromLocal.size >= config.maxSizeUploadAvatar ||
+                !fileFromLocal.type.includes("image"))
+        ) {
+            toast.error(`Dụng lượng file tối đa 1 MB. Định dạng:.JPEG, .PNG`, {
+                position: "top-center",
+            });
+        } else {
+            setFile(fileFromLocal);
+        }
     };
     return (
         <div className="rounded-sm bg-white px-2 pb-10 md:px-7 md:pb-20 shadow ">
@@ -259,6 +270,9 @@ export default function Profile() {
                             className="hidden"
                             ref={fileInputRef}
                             onChange={onFileChange}
+                            onClick={(event) => {
+                                event.target.value = null;
+                            }}
                         />
                         <button
                             className="flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm"
