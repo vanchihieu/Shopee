@@ -6,15 +6,14 @@ import Input from "src/components/Input";
 import { UserSchema, userSchema } from "src/utils/rule";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputNumber from "src/components/InputNumber";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import DataSelect from "../User/components/DateSelect";
 import { setProfileToLS } from "src/utils/auth";
 import { toast } from "react-toastify";
 import { AppContext } from "src/contexts/app.context";
 import { getAvatarUrl, isAxiosUnprocessableEntityError } from "src/utils/utils";
-import { type } from "os";
 import { ErrorResponse } from "src/types/utils.type";
-import config from "src/constants/config";
+import InputFile from "src/components/InputFile";
 
 type FormData = Pick<
     UserSchema,
@@ -42,7 +41,6 @@ const profileSchema = userSchema.pick([
 // Nhấn submit thì tiến hành upload lên server, nếu upload thành công thì tiến hành gọi api updateProfile
 
 export default function Profile() {
-    const fileInputRef = useRef<HTMLInputElement>(null);
     const { setProfile } = useContext(AppContext);
     const [file, setFile] = useState<File>();
 
@@ -134,23 +132,8 @@ export default function Profile() {
         }
     });
 
-    const handleUpload = () => {
-        fileInputRef.current?.click();
-    };
-
-    const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const fileFromLocal = event.target.files?.[0];
-        if (
-            fileFromLocal &&
-            (fileFromLocal.size >= config.maxSizeUploadAvatar ||
-                !fileFromLocal.type.includes("image"))
-        ) {
-            toast.error(`Dụng lượng file tối đa 1 MB. Định dạng:.JPEG, .PNG`, {
-                position: "top-center",
-            });
-        } else {
-            setFile(fileFromLocal);
-        }
+    const handleChangeFile = (file?: File) => {
+        setFile(file);
     };
     return (
         <div className="rounded-sm bg-white px-2 pb-10 md:px-7 md:pb-20 shadow ">
@@ -264,23 +247,9 @@ export default function Profile() {
                                 className="w-full h-full rounded-full object-cover"
                             />
                         </div>
-                        <input
-                            type="file"
-                            accept=".jpg, .jpeg, .png"
-                            className="hidden"
-                            ref={fileInputRef}
-                            onChange={onFileChange}
-                            onClick={(event) => {
-                                event.target.value = null;
-                            }}
-                        />
-                        <button
-                            className="flex h-10 items-center justify-end rounded-sm border bg-white px-6 text-sm text-gray-600 shadow-sm"
-                            type="button"
-                            onClick={handleUpload}
-                        >
-                            Chọn ảnh
-                        </button>
+
+                        <InputFile onChange={handleChangeFile} />
+
                         <div className="mt-3 text-gray-400">
                             <div>Dụng lượng file tối đa 1 MB</div>
                             <div>Định dạng:.JPEG, .PNG</div>
