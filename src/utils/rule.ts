@@ -116,8 +116,18 @@ export const userSchema = yup.object({
         .date()
         .max(new Date(), "Hãy chọn một ngày trong quá khứ"),
     // ke thua truong password
-    password: schema.fields["password"],
-    new_password: schema.fields["password"],
+    password: schema.fields["password"] as yup.StringSchema<
+        string | undefined,
+        yup.AnyObject,
+        undefined,
+        ""
+    >,
+    new_password: schema.fields["password"] as yup.StringSchema<
+        string | undefined,
+        yup.AnyObject,
+        undefined,
+        ""
+    >,
     confirm_password: handleConfirmPasswordYup("new_password"),
 });
 
