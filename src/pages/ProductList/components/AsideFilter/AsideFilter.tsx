@@ -12,6 +12,7 @@ import { NoUndefinedField } from "src/types/utils.type";
 import { omit } from "lodash";
 import RatingStars from "../RatingStars";
 import { QueryConfig } from "src/hooks/useQueryConfig";
+import { ObjectSchema } from "yup";
 interface Props {
     queryConfig: QueryConfig;
     categories: Category[];
@@ -33,7 +34,7 @@ export default function AsideFilter({ queryConfig, categories }: Props) {
             price_max: "",
             price_min: "",
         },
-        resolver: yupResolver(priceSchema),
+        resolver: yupResolver<FormData>(priceSchema as ObjectSchema<FormData>),
         shouldFocusError: false,
     });
     const navigate = useNavigate();

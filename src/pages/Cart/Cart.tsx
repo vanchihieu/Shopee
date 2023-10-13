@@ -10,10 +10,10 @@ import path from "src/constants/path";
 import { purchasesStatus } from "src/constants/purchase";
 import { Purchase } from "src/types/purchase.type";
 import { formatCurrency, generateNameId } from "src/utils/utils";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { keyBy } from "lodash";
 import { AppContext } from "src/contexts/app.context";
-import noproduct from 'src/assets/images/no-product.png'
+import noproduct from "src/assets/images/no-product.png";
 
 export default function Cart() {
     const { extendedPurchases, setExtendedPurchases } = useContext(AppContext);
@@ -36,16 +36,16 @@ export default function Cart() {
             refetch();
         },
     });
-    const buyProductsMutation = useMutation({
-        mutationFn: purchaseApi.buyProducts,
-        onSuccess: (data) => {
-            refetch();
-            toast.success(data.data.message, {
-                position: "top-center",
-                autoClose: 1000,
-            });
-        },
-    });
+    // const buyProductsMutation = useMutation({
+    //     mutationFn: purchaseApi.buyProducts,
+    //     onSuccess: (data) => {
+    //         refetch();
+    //         toast.success(data.data.message, {
+    //             position: "top-center",
+    //             autoClose: 1000,
+    //         });
+    //     },
+    // });
     const location = useLocation();
     const choosenPurchaseIdFromLocation = (
         location.state as { purchaseId: string } | null
@@ -84,21 +84,21 @@ export default function Cart() {
     useEffect(() => {
         setExtendedPurchases((prev) => {
             const extendedPurchasesObject = keyBy(prev, "_id");
-            return (
-                purchasesInCart?.map((purchase) => {
-                    const isChoosenPurchaseFromLocation =
-                        choosenPurchaseIdFromLocation === purchase._id;
-                    return {
-                        ...purchase,
-                        disabled: false,
-                        checked:
-                            isChoosenPurchaseFromLocation ||
-                            Boolean(
-                                extendedPurchasesObject[purchase._id]?.checked
-                            ),
-                    };
-                }) || []
-            );
+            return Array.isArray(purchasesInCart)
+                ? purchasesInCart.map((purchase) => {
+                      const isChoosenPurchaseFromLocation =
+                          choosenPurchaseIdFromLocation === purchase._id;
+                      return {
+                          ...purchase,
+                          disabled: false,
+                          checked:
+                              isChoosenPurchaseFromLocation ||
+                              Boolean(
+                                  extendedPurchasesObject[purchase._id]?.checked
+                              ),
+                      };
+                  })
+                : [];
         });
     }, [purchasesInCart, choosenPurchaseIdFromLocation]);
 
@@ -164,15 +164,15 @@ export default function Cart() {
         deletePurchasesMutation.mutate(purchasesIds);
     };
 
-    const handleBuyPurchases = () => {
-        if (checkedPurchases.length > 0) {
-            const body = checkedPurchases.map((purchase) => ({
-                product_id: purchase.product._id,
-                buy_count: purchase.buy_count,
-            }));
-            buyProductsMutation.mutate(body);
-        }
-    };
+    // const handleBuyPurchases = () => {
+    //     if (checkedPurchases.length > 0) {
+    //         const body = checkedPurchases.map((purchase) => ({
+    //             product_id: purchase.product._id,
+    //             buy_count: purchase.buy_count,
+    //         }));
+    //         buyProductsMutation.mutate(body);
+    //     }
+    // };
     return (
         <div className="bg-neutral-100 py-16">
             <div className="container">

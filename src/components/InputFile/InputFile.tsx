@@ -35,8 +35,10 @@ export default function InputFile({ onChange }: Props) {
                 className="hidden"
                 ref={fileInputRef}
                 onChange={onFileChange}
-                onClick={(event) => {
-                    event.target.value = null;
+                onClick={(
+                    event: React.MouseEvent<HTMLInputElement, MouseEvent>
+                ) => {
+                    (event.target as HTMLInputElement).value = "";
                 }}
             />
             <button

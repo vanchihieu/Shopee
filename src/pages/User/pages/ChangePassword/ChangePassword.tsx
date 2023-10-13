@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { omit } from "lodash";
 import { isAxiosUnprocessableEntityError } from "src/utils/utils";
 import { ErrorResponse } from "src/types/utils.type";
+import { ObjectSchema } from "yup";
 
 // Do yup vừa update nhẹ lên version mới nên typescript của nó bị thôi đổi. Vậy nên để không bị lỗi về mặt typescript khi implement yup vào cái form trong bài viết này thì mọi người cập nhật 1 tí xíu giúp mình chỗ này.
 
@@ -46,7 +47,9 @@ export default function ChangePassword() {
             confirm_password: "",
             new_password: "",
         },
-        resolver: yupResolver(passwordSchema),
+        resolver: yupResolver<FormData>(
+            passwordSchema as ObjectSchema<FormData>
+        ),
     });
     const updateProfileMutation = useMutation(userApi.updateProfile);
 
