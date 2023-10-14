@@ -6,7 +6,7 @@ import Button from "src/components/Button";
 import userApi from "src/apis/user.api";
 import { useMutation } from "react-query";
 import { toast } from "react-toastify";
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { isAxiosUnprocessableEntityError } from "src/utils/utils";
 import { ErrorResponse } from "src/types/utils.type";
 import { ObjectSchema } from "yup";

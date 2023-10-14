@@ -11,7 +11,7 @@ import { purchasesStatus } from "src/constants/purchase";
 import { Purchase } from "src/types/purchase.type";
 import { formatCurrency, generateNameId } from "src/utils/utils";
 // import { toast } from "react-toastify";
-import { keyBy } from "lodash";
+import keyBy from "lodash/keyBy";
 import { AppContext } from "src/contexts/app.context";
 import noproduct from "src/assets/images/no-product.png";
 

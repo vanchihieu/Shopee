@@ -3,7 +3,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutation } from "react-query";
 import Input from "src/components/Input";
-import { omit } from "lodash";
+
+// Không có tính năng tree-shaking
+// import { omit } from 'lodash'
+
+// Import chỉ mỗi function omit
+import omit from 'lodash/omit'
 
 import { schema, Schema } from "src/utils/rule";
 import authApi from "src/apis/auth.api";
