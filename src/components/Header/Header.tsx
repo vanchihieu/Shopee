@@ -75,7 +75,7 @@ export default function Header() {
                     <div className="col-span-1 justify-self-end">
                         <Popover
                             renderPopover={
-                                <div className="relative  max-w-[400px] rounded-sm border border-gray-200 bg-white text-sm shadow-md">
+                                <div className="relative  max-w-[400px] rounded-sm border border-gray-200 bg-white text-sm shadow-md z-50">
                                     {Array.isArray(purchasesInCart) &&
                                     purchasesInCart.length > 0 ? (
                                         <div className="p-2">
