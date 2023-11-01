@@ -136,9 +136,9 @@ export default function Profile() {
         setFile(file);
     };
     return (
-        <div className="rounded-sm bg-white px-2 pb-10 md:px-7 md:pb-20 shadow ">
-            <div className="border-b border-b-gray-200 py-6">
-                <h1 className="text-lg font-medium capitalize text-gray-900">
+        <div className="px-2 pb-10 bg-white rounded-sm shadow md:px-7 md:pb-20 ">
+            <div className="py-6 border-b border-b-gray-200">
+                <h1 className="text-lg font-medium text-gray-900 capitalize">
                     Hồ sơ của tôi
                 </h1>
                 <div className="mt-1 text-sm text-gray-700">
@@ -147,11 +147,11 @@ export default function Profile() {
             </div>
 
             <form
-                className="mt-8 flex flex-col-reverse md:flex-row md:items-start"
+                className="flex flex-col-reverse mt-8 md:flex-row md:items-start"
                 onSubmit={onSubmit}
             >
-                <div className="mt-6 flex-grow pr-12 md:mt-0 md:pr-12">
-                    <div className="flex flex-wrap flex-col sm:flex-row">
+                <div className="flex-grow pr-12 mt-6 md:mt-0 md:pr-12">
+                    <div className="flex flex-col flex-wrap sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">
                             Email
                         </div>
@@ -162,7 +162,7 @@ export default function Profile() {
                         </div>
                     </div>
 
-                    <div className="mt-6 flex flex-wrap flex-col sm:flex-row">
+                    <div className="flex flex-col flex-wrap mt-6 sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">
                             Tên
                         </div>
@@ -177,7 +177,7 @@ export default function Profile() {
                         </div>
                     </div>
 
-                    <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
+                    <div className="flex flex-col flex-wrap mt-2 sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">
                             Số điẹn thoại
                         </div>
@@ -198,7 +198,7 @@ export default function Profile() {
                         </div>
                     </div>
 
-                    <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
+                    <div className="flex flex-col flex-wrap mt-2 sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize">
                             Địa chỉ
                         </div>
@@ -225,11 +225,11 @@ export default function Profile() {
                         )}
                     />
 
-                    <div className="mt-2 flex flex-wrap flex-col sm:flex-row">
+                    <div className="flex flex-col flex-wrap mt-2 sm:flex-row">
                         <div className="sm:w-[20%] truncate pt-3 sm:text-right capitalize"></div>
                         <div className="sm:w-[80%] sm:pl-5">
                             <Button
-                                className="flex items-center h-9 bg-orange px-5 text-center text-sm text-white hover:bg-orange/80 rounded-sm"
+                                className="flex items-center px-5 text-sm text-center text-white rounded-sm h-9 bg-orange hover:bg-orange/80"
                                 type="submit"
                             >
                                 Lưu
@@ -240,11 +240,11 @@ export default function Profile() {
 
                 <div className="flex justify-center md:w-72 md:border-l md:border-l-gray-200 ">
                     <div className="flex flex-col items-center">
-                        <div className="my-5 h-24 w-24">
+                        <div className="w-24 h-24 my-5">
                             <img
                                 src={previewImage || getAvatarUrl(avatar)}
                                 alt="ima"
-                                className="w-full h-full rounded-full object-cover"
+                                className="object-cover w-full h-full rounded-full"
                             />
                         </div>
 
