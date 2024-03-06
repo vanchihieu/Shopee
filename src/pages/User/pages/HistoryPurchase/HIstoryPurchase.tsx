@@ -28,7 +28,6 @@ export default function HistoryPurchase() {
   });
 
   const purchasesInCart = purchasesInCartData?.data.data;
-  console.log("🚀 ~ HistoryPurchase ~ purchasesInCart:", purchasesInCart);
 
   const purchaseTabsLink = purchaseTabs.map((tab) => (
     <Link
