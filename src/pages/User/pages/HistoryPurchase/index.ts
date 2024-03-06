@@ -1,3 +1,3 @@
-import HIstoryPurchase from "./HistoryPurchase";
+import HistoryPurchase from "./HistoryPurchase";
 
-export default HIstoryPurchase
+export default HistoryPurchase
