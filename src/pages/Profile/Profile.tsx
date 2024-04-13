@@ -36,7 +36,7 @@ const profileSchema = userSchema.pick([
 // Nhấn upload: upload lên server luôn => server trả về url ảnh
 // Nhấn submit thì gửi url ảnh cộng với data lên server
 
-// Flow 2:
+// Flow 2: (lam theo flow 2)
 // Nhấn upload: không upload lên server
 // Nhấn submit thì tiến hành upload lên server, nếu upload thành công thì tiến hành gọi api updateProfile
 

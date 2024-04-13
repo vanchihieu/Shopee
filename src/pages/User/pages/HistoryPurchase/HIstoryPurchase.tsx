@@ -18,7 +18,7 @@ const purchaseTabs = [
 ];
 
 export default function HistoryPurchase() {
-  const queryParams: { status?: string } = useQueryParams();
+  const queryParams: { status?: string } = useQueryParams(); // lấy trên URl thì luôn là String
   const status: number = Number(queryParams.status) || purchasesStatus.all;
 
   const { data: purchasesInCartData } = useQuery({

@@ -21,8 +21,35 @@ If you are developing a production application, we recommend updating the config
     tsconfigRootDir: __dirname,
    },
 ```
+
 - Start project: yarn dev
 
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+## Login
+
+![alt text](public/image-1.png)
+
+## Register
+
+![alt text](public/image-2.png)
+
+## ProductList
+
+![alt text](public/image-3.png)
+![alt text](public/image-4.png)
+
+## ProductDetail
+
+![Product Detail 1](public/image-5.png)
+![Product Detail 2](public/image-6.png)
+
+## Cart
+
+![Cart](public/image-7.png)
+
+## Profile
+
+![Profile](public/image-8.png)

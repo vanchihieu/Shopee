@@ -20,6 +20,7 @@ export const ProductList = () => {
         staleTime: 3 * 60 * 1000,
     });
     const { data: categoriesData } = useQuery({
+
         queryKey: ["categories"],
         queryFn: () => {
             return categoryApi.getCategories();

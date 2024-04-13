@@ -20,7 +20,7 @@ const purchaseApi = {
         );
     },
     updatePurchase(body: { product_id: string; buy_count: number }) {
-        return http.put(`${URL}/update-purchase`, body);
+        return http.put<SuccessResponse<Purchase>>(`${URL}/update-purchase`, body);
     },
     deletePurchase(purchaseIds: string[]) {
         return http.delete<SuccessResponse<{ deleted_count: number }>>(
