@@ -174,20 +174,20 @@ export default function Cart() {
     }
   };
   return (
-    <div className="bg-neutral-100 py-16">
+    <div className="py-16 bg-neutral-100">
       <div className="container">
         {extendedPurchases.length > 0 ? (
           <>
             {" "}
             <div className="overflow-hidden">
               <div className="min-w-[1000px]">
-                <div className="grid grid-cols-12 rounded-sm bg-white py-5 px-9 text-sm capitalize text-gray-500 shadow">
+                <div className="grid grid-cols-12 py-5 text-sm text-gray-500 capitalize bg-white rounded-sm shadow px-9">
                   <div className="col-span-6">
                     <div className="flex items-center">
-                      <div className="flex flex-shrink-0 items-center justify-center pr-3">
+                      <div className="flex items-center justify-center flex-shrink-0 pr-3">
                         <input
                           type="checkbox"
-                          className="h-5 w-5 accent-orange"
+                          className="w-5 h-5 accent-orange"
                           checked={isAllChecked}
                           onChange={handleCheckAll}
                         />
@@ -205,18 +205,18 @@ export default function Cart() {
                   </div>
                 </div>
                 {extendedPurchases.length > 0 && (
-                  <div className="my-3 rounded-sm bg-white p-5 shadow">
+                  <div className="p-5 my-3 bg-white rounded-sm shadow">
                     {extendedPurchases?.map((purchase, index) => (
                       <div
                         key={purchase._id}
-                        className="first:mt-0 mt-5 grid grid-cols-12 text-center rounded-sm border border-gray-200 py-5 px-4 text-sm text-gray-500 items-center"
+                        className="grid items-center grid-cols-12 px-4 py-5 mt-5 text-sm text-center text-gray-500 border border-gray-200 rounded-sm first:mt-0"
                       >
                         <div className="col-span-6">
                           <div className="flex">
-                            <div className="flex flex-shrink-0 items-center justify-center pr-3">
+                            <div className="flex items-center justify-center flex-shrink-0 pr-3">
                               <input
                                 type="checkbox"
-                                className="h-5 w-5 accent-orange"
+                                className="w-5 h-5 accent-orange"
                                 checked={purchase.checked}
                                 onChange={handleCheck(index)}
                               />
@@ -228,7 +228,7 @@ export default function Cart() {
                                     name: purchase.product.name,
                                     id: purchase.product._id,
                                   })}`}
-                                  className="h-20 w-20 flex-shrink-0 "
+                                  className="flex-shrink-0 w-20 h-20 "
                                 >
                                   <img
                                     src={purchase.product.image}
@@ -241,7 +241,7 @@ export default function Cart() {
                                       name: purchase.product.name,
                                       id: purchase.product._id,
                                     })}`}
-                                    className="line-clamp-2 text-left"
+                                    className="text-left line-clamp-2"
                                   >
                                     {purchase.product.name}
                                   </Link>
@@ -252,7 +252,7 @@ export default function Cart() {
                         </div>
 
                         <div className="col-span-6">
-                          <div className="grid grid-cols-5 items-center">
+                          <div className="grid items-center grid-cols-5">
                             <div className="col-span-2">
                               <div className="flex items-center justify-center">
                                 <span className="text-gray-300 line-through">
@@ -310,7 +310,7 @@ export default function Cart() {
 
                             <div className="col-span-1">
                               <button
-                                className="bg-orange/95 px-4 py-3 text-white transition-colors hover:text-black hover:bg-orange/90 rounded-md"
+                                className="px-4 py-3 text-white transition-colors rounded-md bg-orange/95 hover:text-black hover:bg-orange/90"
                                 onClick={handleDelete(index)}
                               >
                                 Xóa
@@ -324,12 +324,12 @@ export default function Cart() {
                 )}
               </div>
             </div>
-            <div className="sticky bottom-0 z-10 flex flex-col sm:flex-row  sm:items-center rounded-sm bg-white p-5 shadow-sm border border-gray-200 mt-5">
+            <div className="sticky bottom-0 z-10 flex flex-col p-5 mt-5 bg-white border border-gray-200 rounded-sm shadow-sm sm:flex-row sm:items-center">
               <div className="flex items-center">
-                <div className="flex flex-shrink-0 items-center justify-center">
+                <div className="flex items-center justify-center flex-shrink-0">
                   <input
                     type="checkbox"
-                    className="h-5 w-5 accent-orange"
+                    className="w-5 h-5 accent-orange"
                     checked={isAllChecked}
                   />
                 </div>
@@ -347,7 +347,7 @@ export default function Cart() {
                 </button>
               </div>
 
-              <div className="sm:ml-auto flex flex-col sm:flex-row items-center mt-5 sm:mt-0">
+              <div className="flex flex-col items-center mt-5 sm:ml-auto sm:flex-row sm:mt-0">
                 <div>
                   <div className="flex items-center sm:justify-end">
                     <div>
@@ -357,7 +357,7 @@ export default function Cart() {
                       ₫{formatCurrency(totalCheckedPurchasePrice)}
                     </div>
                   </div>
-                  <div className="flex items-center sm:justify-end text-sm">
+                  <div className="flex items-center text-sm sm:justify-end">
                     <div className="text-gray-500">Tiết kiệm</div>
                     <div className="ml-6 text-orange">
                       ₫{formatCurrency(totalCheckedPurchaseSavingPrice)}
@@ -365,7 +365,7 @@ export default function Cart() {
                   </div>
                 </div>
                 <Button
-                  className="mt-5 sm:mt-0  flex h-10 w-52 items-center justify-center bg-red-500 text-sm uppercase text-white hover:bg-red-600 sm:ml-4 "
+                  className="flex items-center justify-center h-10 mt-5 text-sm text-white uppercase bg-red-500 sm:mt-0 w-52 hover:bg-red-600 sm:ml-4 "
                   onClick={handleBuyPurchases}
                   disabled={buyProductsMutation.isLoading}
                 >
@@ -379,7 +379,7 @@ export default function Cart() {
             <img
               src={noproduct}
               alt="no purchase"
-              className="mx-auto h-24 w-24"
+              className="w-24 h-24 mx-auto"
             />
             <div className="mt-5 font-bold text-gray-400">
               Giỏ hàng của bạn còn trống
@@ -387,7 +387,7 @@ export default function Cart() {
             <div className="mt-5 text-center">
               <Link
                 to={path.home}
-                className=" rounded-sm bg-orange px-10 py-2  uppercase text-white transition-all hover:bg-orange/80"
+                className="px-10 py-2 text-white uppercase transition-all rounded-sm bg-orange hover:bg-orange/80"
               >
                 Mua ngay
               </Link>
