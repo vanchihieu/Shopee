@@ -5,7 +5,7 @@ import { AuthResponse } from "src/types/auth.type";
 import {
   clearLS,
   getAccessTokenFromLS,
-  getRefreshTokenFromLS,
+  // getRefreshTokenFromLS,
   setAccessTokenToLS,
   setProfileToLS,
 } from "./auth";
@@ -14,12 +14,12 @@ import config from "src/constants/config";
 export class Http {
   instance: AxiosInstance;
   private accessToken: string;
-  private refreshToken: string;
-  private refreshTokenRequest: Promise<string> | null;
+  // private refreshToken: string;
+  // private refreshTokenRequest: Promise<string> | null;
   constructor() {
     this.accessToken = getAccessTokenFromLS();
-    this.refreshToken = getRefreshTokenFromLS();
-    this.refreshTokenRequest = null;
+    // this.refreshToken = getRefreshTokenFromLS();
+    // this.refreshTokenRequest = null;
     this.instance = axios.create({
       baseURL: config.baseUrl,
       timeout: 10000,
